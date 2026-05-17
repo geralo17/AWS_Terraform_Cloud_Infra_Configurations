@@ -1,0 +1,78 @@
+List of common commands for Terraform:
+
+- `terraform init` - Initializes a Terraform working directory, downloading necessary providers and setting up the backend.
+- `terraform plan` - Creates an execution plan, showing what actions Terraform will take to achieve the desired state defined in the configuration files.
+- `terraform apply` - Applies the changes required to reach the desired state of the configuration, as defined in the plan.
+- `terraform destroy` - Destroys all resources managed by the current configuration, effectively tearing down the infrastructure.
+- `terraform validate` - Validates the configuration files, checking for syntax errors and ensuring that the configuration is well-formed.
+- `terraform fmt` - Formats the configuration files according to the standard style, making them easier to read and maintain.
+- `terraform state` - Manages the state file, allowing you to view, list, and manipulate the resources tracked by Terraform.
+- `terraform output` - Displays the output values defined in the configuration, which can be used to retrieve information about the created resources.
+
+main Terraform components:
+- Configuration files - The `.tf` files that describe the infrastructure you want.
+  - In our example: `main.tf`, `providers.tf`, `variables.tf`, `outputs.tf`, and `versions.tf` are all part of one Terraform configuration.
+  - Terraform reads all `.tf` files in the folder together.
+
+- Provider - The plugin Terraform uses to talk to a cloud or service.
+  - In our example: `providers.tf` configures the AWS provider.
+  - It uses `region = var.aws_region`, which means the AWS region comes from a variable.
+
+- Required providers - The provider source and version rules Terraform should use.
+  - In our example: `versions.tf` says to use the AWS provider from `hashicorp/aws`.
+  - It also pins the AWS provider version with `version = "~> 3.0"`.
+
+- Variables - Input values that make the Terraform code reusable.
+  - In our example: `variables.tf` defines:
+    `aws_region`
+    `instance_type`
+    `ami_id`
+  - `main.tf` uses those values with `var.aws_region`, `var.instance_type`, and `var.ami_id`.
+
+- Resources - The real infrastructure Terraform creates and manages.
+  - In our example: `main.tf` creates:
+    `aws_vpc.techonetwenty_vpc`
+    `aws_subnet.sample_subnet`
+    `aws_security_group.sample_security_group`
+    `aws_instance.sample_instance`
+  - These become real AWS resources after `terraform apply`.
+
+- Resource references - How one resource connects to another.
+  - In our example: the subnet uses `vpc_id = aws_vpc.techonetwenty_vpc.id`.
+  - The EC2 instance uses `subnet_id = aws_subnet.sample_subnet.id`.
+  - This tells Terraform the EC2 instance depends on the subnet, and the subnet depends on the VPC.
+
+- State - Terraform's record of what it created.
+  - Terraform uses state to compare your `.tf` files against the real infrastructure.
+  - This is how Terraform knows whether to create, update, or destroy something.
+  - Common local state file: `terraform.tfstate`.
+
+- Outputs - Values Terraform prints after creating infrastructure.
+  - In our example: `outputs.tf` prints:
+    `vpc_id`
+    `instance_public_id`
+  - These help you quickly find important values, like the VPC ID or EC2 public IP.
+
+- Modules - Reusable Terraform packages.
+  - A module is a folder of Terraform code that can be reused.
+  - Our current example does not use a module yet.
+  - If this grew larger, we could move the EC2 setup into a module like:
+    `modules/ec2_instance/main.tf`
+    `modules/ec2_instance/variables.tf`
+    `modules/ec2_instance/outputs.tf`
+
+how our example connects:
+- `versions.tf` says which Terraform and AWS provider versions to use.
+- `providers.tf` tells Terraform to use AWS in the selected region.
+- `variables.tf` stores reusable inputs like region, AMI, and instance type.
+- `main.tf` defines the AWS infrastructure: VPC, subnet, security group, and EC2 instance.
+- `outputs.tf` prints useful results after apply, like the VPC ID and EC2 public IP.
+- Terraform state tracks what was actually created.
+
+typical workflow:
+- `terraform init`
+- `terraform fmt`
+- `terraform validate`
+- `terraform plan`
+- `terraform apply`
+- `terraform output`
