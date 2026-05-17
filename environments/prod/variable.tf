@@ -3,6 +3,12 @@ variable "aws_region" {
   default     = "ap-southeast-4"
 }
 
+variable "aws_profile" {
+  description = "Optional local AWS CLI profile. Leave null in CI."
+  type        = string
+  default     = null
+}
+
 variable "instance_type" {
   description = "The Instance type to use for EC2 instances"
   default     = "t3.micro"

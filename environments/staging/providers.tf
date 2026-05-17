@@ -1,4 +1,4 @@
 provider "aws" {
   region  = var.aws_region
-  profile = "playground_user"
+  profile = var.aws_profile
 }
