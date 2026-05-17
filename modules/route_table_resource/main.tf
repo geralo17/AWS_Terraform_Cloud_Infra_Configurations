@@ -1,0 +1,21 @@
+resource "aws_route_table" "rt_instance" {
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.is_public ? var.internet_gateway_id : null
+    nat_gateway_id = var.is_public ? null : var.nat_gateway_id
+  }
+
+  dynamic "route" {
+    for_each = var.additional_routes
+
+    content {
+      cidr_block     = route.value.cidr_block
+      gateway_id     = lookup(route.value, "gateway_id", null)
+      nat_gateway_id = lookup(route.value, "nat_gateway_id", null)
+    }
+  }
+
+  tags = var.tags
+}
