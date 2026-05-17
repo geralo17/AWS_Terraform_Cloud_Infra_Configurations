@@ -4,9 +4,9 @@ variable "aws_region" {
 }
 
 variable "aws_profile" {
-  description = "Optional local AWS CLI profile. Leave null in CI."
+  description = "Optional local AWS CLI profile. Leave empty in CI."
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "instance_type" {

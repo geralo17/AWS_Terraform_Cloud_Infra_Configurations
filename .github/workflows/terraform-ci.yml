@@ -61,4 +61,4 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform plan
-        run: terraform plan -input=false -no-color -var='aws_profile=null'
+        run: terraform plan -input=false -no-color -var='aws_profile='
