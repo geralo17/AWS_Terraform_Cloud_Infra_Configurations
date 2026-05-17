@@ -1,0 +1,4 @@
+aws_region    = "ap-southeast-4"
+instance_type = "t3.micro"
+ami_id        = "ami-04b37eacc26b7446c"
+ssh_key_name  = "playground-public-ec2"

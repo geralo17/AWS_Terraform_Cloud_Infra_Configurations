@@ -29,8 +29,8 @@ variable "key_name" {
   type        = string
   default     = "playground-public-ec2"
 }
-    
-variable tags {
+
+variable "tags" {
   description = "tags to assign to the EC2 instance"
   type        = map(string)
 }
