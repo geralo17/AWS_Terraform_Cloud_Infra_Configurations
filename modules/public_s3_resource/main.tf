@@ -32,17 +32,17 @@ resource "aws_s3_bucket_policy" "bucket_policy_instance" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
+        Effect    = "Allow"
         Principal = "*"
-        Action = "s3:GetObject"
-        Resource = "${aws_s3_bucket.website_bucket_instance.arn}/*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.website_bucket_instance.arn}/*"
       }
     ]
   })
 }
 
 resource "aws_s3_object" "index_document_instance" {
-    bucket = aws_s3_bucket.website_bucket_instance.id
-    key    = var.index_document
-    source = var.index_document_path
+  bucket = aws_s3_bucket.website_bucket_instance.id
+  key    = var.index_document
+  source = var.index_document_path
 }

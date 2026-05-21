@@ -36,6 +36,7 @@ jobs:
         environment:
           - staging
           - prod
+          - s3_private_playground
 
     defaults:
       run:
